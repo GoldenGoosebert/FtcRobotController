@@ -4,30 +4,33 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Robot.Commands.Subsystems.DriveSubsystem;
 
+import java.util.function.Supplier;
+
 @SuppressWarnings("unused")
 public class DriveFCCommand extends CommandBase {
 
 
-    DriveSubsystem drivesubsystem;
-    double strafeSpeed;
-    double turnSpeed;
-    double forwardSpeed;
-    double angle;
+    private final DriveSubsystem drivesubsystem;
 
-    public DriveFCCommand(DriveSubsystem drivesubsystem, double strafeSpeed, double forwardSpeed, double turnSpeed, double angle){
+    private final Supplier <Double> strafeSpeed;
+    private final Supplier <Double> turnSpeed;
+    private final Supplier <Double> forwardSpeed;
+    public DriveFCCommand(DriveSubsystem drivesubsystem,
+                          Supplier <Double> strafeSpeed,
+                          Supplier <Double> forwardSpeed,
+                          Supplier <Double> turnSpeed){
 
         this.drivesubsystem = drivesubsystem;
         this.strafeSpeed = strafeSpeed;
         this.turnSpeed = turnSpeed;
         this.forwardSpeed = forwardSpeed;
-        this.angle = angle;
 
         addRequirements(drivesubsystem);
     }
 
     @Override
     public void execute(){
-        drivesubsystem.driveFC(strafeSpeed,forwardSpeed,turnSpeed, angle);
+        drivesubsystem.driveFC(strafeSpeed.get(), turnSpeed.get(), forwardSpeed.get());
     }
 
 }

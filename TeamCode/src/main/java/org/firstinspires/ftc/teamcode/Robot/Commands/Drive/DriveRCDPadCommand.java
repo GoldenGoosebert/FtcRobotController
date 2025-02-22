@@ -1,17 +1,22 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.Drive;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-
 import org.firstinspires.ftc.teamcode.Robot.Commands.Subsystems.DriveSubsystem;
+import java.util.function.Supplier;
 
 public class DriveRCDPadCommand extends CommandBase {
 
     DriveSubsystem driveSubsystem;
-    double strafeSpeed;
-    double turnSpeed;
-    double forwardSpeed;
 
-    public DriveRCDPadCommand(DriveSubsystem driveSubsystem, double strafeSpeed, double turnSpeed, double forwardSpeed){
+    private final Supplier <Double> strafeSpeed;
+    private final Supplier <Double> turnSpeed;
+    private final Supplier <Double> forwardSpeed;
+
+    public DriveRCDPadCommand(DriveSubsystem driveSubsystem,
+                              Supplier <Double> strafeSpeed,
+                              Supplier <Double> turnSpeed,
+                              Supplier <Double> forwardSpeed){
+
         this.driveSubsystem = driveSubsystem;
 
         this.strafeSpeed = strafeSpeed;
@@ -23,7 +28,7 @@ public class DriveRCDPadCommand extends CommandBase {
 
     @Override
     public void initialize(){
-        driveSubsystem.driveRC(strafeSpeed,forwardSpeed,turnSpeed);
+        driveSubsystem.driveRC(strafeSpeed.get(),forwardSpeed.get(),turnSpeed.get());
     }
 
     @Override

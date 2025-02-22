@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveSubsystem extends SubsystemBase {
 
+    public static double angles;
+    public static double autoAngles = 0;
     MecanumDrive mecanumDrive;
 
     public DriveSubsystem(HardwareMap hardwareMap){
@@ -29,8 +31,8 @@ public class DriveSubsystem extends SubsystemBase {
         this.mecanumDrive = new MecanumDrive(lfMotor,rfMotor,lrMotor,rrMotor);
     }
 
-    public void driveFC(double strafeSpeed, double forwardSpeed, double turnSpeed, double angle){
-        mecanumDrive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, angle, true);
+    public void driveFC(double strafeSpeed, double forwardSpeed, double turnSpeed){
+        mecanumDrive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed,angles - autoAngles, true);
     }
 
     public void driveRC(double strafeSpeed, double forwardSpeed, double turnSpeed){
